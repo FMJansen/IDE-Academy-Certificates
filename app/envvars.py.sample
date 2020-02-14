@@ -1,0 +1,3 @@
+# coding=utf-8
+
+db_path = "/absolute/path/to/dabatase.db"
