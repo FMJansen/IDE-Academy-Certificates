@@ -80,6 +80,7 @@ def listdir_nohidden(path):
 
 
 
+# Define function to get the attendences from one csv file
 def extract_attendences_from(csv_file, folder, year, db):
     # Get workshop name and date
     workshop = re.sub(" - Attempt Details.csv", "", csv_file)
@@ -167,6 +168,30 @@ def extract_attendences_from(csv_file, folder, year, db):
 
 
 
+def cycle_through_folder_list(attendence_folder_list):
+
+    logging.info("🚴‍♀️ Cycling through list of sub folders")
+
+    for sub_folder in attendence_folder_list:
+
+        # Create path for the sub folder
+        csv_file_folder = "{0}/{1}".format(folder_containing_attendence, sub_folder)
+
+        # Get year from sub folder name
+        year = re.search("[0-9]+", sub_folder)[0]
+
+        # Get list of files and start cycling through them
+        csv_file_list = listdir_nohidden(csv_file_folder)
+        logging.warning("👀 Checking folder {0}".format(csv_file_folder))
+        logging.info("🚲 Cycling through list of csv files/workshops.")
+
+        for csv_file in csv_file_list:
+            extract_attendences_from(csv_file, csv_file_folder, year, db)
+
+
+
+
+
 # Create database if it doesn’t exist yet
 db.create_all()
 logging.info("💽 Database created.")
@@ -179,23 +204,7 @@ folder_containing_attendence = args.attendence
 
 # Get list of sub folders and start cycling through them
 attendence_folder_list = listdir_nohidden(folder_containing_attendence)
-logging.info("🚴‍♀️ Cycling through list of sub folders")
-
-for sub_folder in attendence_folder_list:
-
-    # Create path for the sub folder
-    csv_file_folder = "{0}/{1}".format(folder_containing_attendence, sub_folder)
-
-    # Get year from sub folder name
-    year = re.search("[0-9]+", sub_folder)[0]
-
-    # Get list of files and start cycling through them
-    csv_file_list = listdir_nohidden(csv_file_folder)
-    logging.warning("👀 Checking folder {0}".format(csv_file_folder))
-    logging.info("🚲 Cycling through list of csv files/workshops.")
-
-    for csv_file in csv_file_list:
-        extract_attendences_from(csv_file, csv_file_folder, year, db)
+cycle_through_folder_list(attendence_folder_list)
 
 
 
