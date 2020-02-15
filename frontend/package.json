@@ -1,0 +1,26 @@
+{
+  "name": "src-to-static",
+  "version": "0.0.1",
+  "description": "generates static files from src",
+  "private": true,
+  "dependencies": {
+    "ansi-colors": "*",
+    "browser-sync": "*",
+    "fancy-log": "*",
+    "gulp": "*",
+    "gulp-autoprefixer": "*",
+    "gulp-cache": "*",
+    "gulp-concat": "*",
+    "gulp-imagemin": "*",
+    "gulp-livereload": "*",
+    "gulp-plumber": "*",
+    "gulp-rename": "*",
+    "gulp-sass": "*",
+    "gulp-sourcemaps": "*",
+    "gulp-terser": "*"
+  },
+  "browserslist": [
+    "last 2 years",
+    "not dead"
+  ]
+}

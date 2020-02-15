@@ -1,0 +1,33 @@
+<section class="certificate">
+  <h2 class="certificate__title">
+    IDE Academy Certificate
+  </h2>
+
+  <p class="certificate__text">
+    The staff of the course IDE Academy at the Faculty of Industrial Design Engineering of the Delft University of Technology recognizes that
+  </p>
+
+  <p class="certificate__name">
+    {{ name }}
+  </p>
+
+  <p class="certificate__text">
+    has successfully completed the following workshops:
+  </p>
+
+  <ul class="certificate__workshops">
+    {% for workshop in attendences %}
+      <li style="--rating: {{ workshop.rating / 5 }}"
+        class="workshop">
+        <span class="workshop__name">
+          {{ workshop.workshop_name }}</span>
+        <span class="workshop__date">
+          ({{ workshop.workshop_date.strftime("%B") }})</span>
+      </li>
+    {% endfor %}
+  </ul>
+
+  <p class="certificate__text">
+    As of {{ now.strftime("%B %Y") }}
+  </p>
+</section>

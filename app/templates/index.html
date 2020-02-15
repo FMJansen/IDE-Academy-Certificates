@@ -4,13 +4,53 @@
 
     <meta charset="utf-8">
 
-    <title>ideac</title>
+    <title>IDE Academy Certificates</title>
 
     <meta name="robots" content="no-index,no-follow">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <script src="/static/js/main.js" charset="utf-8" async></script>
+    <link rel="stylesheet" href="/static/css/main.css">
+
   </head>
   <body>
+
+    <header class="site-header">
+      <h1>IDE Academy Certificates</h1>
+    </header>
+
+    <main>
+
+      <section class="start">
+
+        <p class="start__introduction">
+          ...
+        </p>
+
+        <form class="start__questions"
+          action="/certificate/" method="post"
+          onsubmit="event.preventDefault(); getCertificate();">
+
+          <label for="student_number">
+            What’s your student number?
+            <input type="text" name="student_number" placeholder="4444444">
+          </label>
+
+          <label for="name">
+            What name do you want on your certificate?
+            <input type="text" name="name" placeholder="Sam Janssen">
+          </label>
+
+          <button type="submit" name="get_certificate">
+            Generate my certificate
+          </button>
+
+        </form>
+      </section>
+
+      <section class="cert-container" id="cert-container"></section>
+
+    </main>
 
     <footer class="version">
       ideac v0.1

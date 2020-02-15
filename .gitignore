@@ -4,3 +4,5 @@ __pycache__/
 envvars.py
 .DS_Store
 *.db
+frontend/node_modules
+static/

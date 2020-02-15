@@ -1,0 +1,167 @@
+/*-------------------------------------*\
+
+  IDE Academy Certificates
+
+  - Floris Jansen, floris@fmjansen.nl
+
+  base.scss
+  + Variables (colors and fonts)
+  + Reset
+  + Paragraph styles
+  + Buttons
+  + Header
+  + Main
+  + Footer
+  ...
+
+\*-------------------------------------*/
+
+
+
+
+
+/*-------------------------------------*\
+  Variables (colors and fonts)
+\*-------------------------------------*/
+$font: 'Arial', sans-serif;
+$background--light: #fff;
+$accent: red;
+
+// Breakpoints
+$brk--phone: 768px;
+$brk--tablet: 992px;
+$brk--desktop: 1200px;
+$brk--large-desktop: 1920px;
+
+
+
+
+
+
+/*-------------------------------------*\
+  Reset
+\*-------------------------------------*/
+html {
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+
+body {
+  background: $background--light;
+  font-family: $font;
+  font-size: 16px;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  margin: 0;
+  padding-top: 4em;
+  word-wrap: break-word;
+
+  @media (min-width: $brk--tablet) {
+    font-size: 18px;
+  }
+
+  @media (min-width: $brk--desktop) {
+    font-size: 20px;
+  }
+}
+
+
+
+
+
+/*-------------------------------------*\
+  Paragraph styles
+\*-------------------------------------*/
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: $font;
+  font-weight: 700;
+}
+
+a {
+  color: $accent;
+}
+
+
+
+
+
+/*-------------------------------------*\
+  Buttons
+\*-------------------------------------*/
+@mixin button-background($color) {
+  background: $color;
+
+  &:hover {
+    background: darken($color, 10%);
+  }
+
+  &:focus {
+    background: darken($color, 15%);
+  }
+}
+
+.button {
+  border: 0;
+  border-radius: 3px;
+  color: white;
+  cursor: pointer;
+  display: inline-block;
+  font-family: $font;
+  font-size: 1em;
+  font-weight: bold;
+  margin: 5px 0;
+  padding: .7em 1.2em;
+  text-align: center;
+  text-decoration: none;
+  @include button-background($accent);
+}
+
+
+
+
+
+/*-------------------------------------*\
+  Header
+\*-------------------------------------*/
+.skip {
+  background: white;
+  border: 1px solid black;
+  color: black;
+  display: block;
+  line-height: 1;
+  padding: 1em;
+  position: absolute;
+  top: -5em;
+
+  &:focus {
+    left: 5px;
+    top: 5px;
+    z-index: 100000;
+  }
+}
+
+
+
+
+
+/*-------------------------------------*\
+  Main
+\*-------------------------------------*/
+.certificate {
+  border: 1px solid $accent;
+  padding: 2em;
+}
+
+
+
+
+
+
+/*-------------------------------------*\
+  Footer
+\*-------------------------------------*/
