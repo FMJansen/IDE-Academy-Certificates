@@ -26,7 +26,7 @@ parser = argparse.ArgumentParser(
 parser.add_argument("-v", "--verbose", action='count', default=0,
     help="increase output verbosity")
 parser.add_argument("-a", "--attendence", action="store",
-    help="folder with the folders of csv files for the attendence (defaults to ./csv) - make sure the subfolders contain the semester (start month + year, 'Sep YYYY' or 'Feb YYYY') in which the workshop was held")
+    help="folder with the folders of csv files for the attendence - make sure the sub folders contain the semester (start month + year, 'Sep YYYY' or 'Feb YYYY') in which the workshop was held [defaults to ./csv]")
 parser.add_argument("-r", "--replace", action="store_true",
     help="[DANGEROUS 🚫] replace all content in the database")
 
@@ -80,14 +80,22 @@ def listdir_nohidden(path):
 
 
 
-def extract_attendences_from(csv_file, folder, db):
+def extract_attendences_from(csv_file, folder, year, db):
     # Get workshop name and date
     workshop = re.sub(" - Attempt Details.csv", "", csv_file)
     workshop = re.sub("Attendance for ", "", workshop)
     workshop_date = re.search("([A-Z])\w+ [0-9]+", workshop)
-    workshop_date = datetime.strptime(workshop_date[0], "%b %d")
+    workshop_date = "{0} {1}".format(workshop_date[0], year)
+    workshop_date = datetime.strptime(workshop_date, "%b %d %Y")
     workshop_name = re.sub("([A-Z])\w+ [0-9]+", "", workshop)
     workshop_name = workshop_name.strip()
+
+    """
+    January workshops are in the folder of the semester starting in the previous year, so the year should be the one after that of September
+    for those workshops
+    """
+    if workshop_date.month == 1:
+        workshop_date = workshop_date.replace(year = workshop_date.year + 1)
 
     # Open csv file as text
     file_path = '{0}/{1}'.format(folder, csv_file)
@@ -153,7 +161,7 @@ def extract_attendences_from(csv_file, folder, db):
         logging.info("Saving attendences to database")
         db.session.commit()
 
-        logging.info("☑️  Done with {0}".format("FIXME"))
+        logging.info("☑️  Done with {0}".format(workshop_name))
 
 
 
@@ -167,14 +175,27 @@ logging.info("💽 Database created.")
 start_amount = db.session.query(Attendence).count()
 
 # Get folder with the csv files to cycle through
-folder_containing_csvs = args.attendence
+folder_containing_attendence = args.attendence
 
-# Get list of files and start cycling through them
-csv_file_list = listdir_nohidden(folder_containing_csvs)
-logging.info("🚲 Cycling through list of csv files/workshops.")
+# Get list of sub folders and start cycling through them
+attendence_folder_list = listdir_nohidden(folder_containing_attendence)
+logging.info("🚴‍♀️ Cycling through list of sub folders")
 
-for csv_file in csv_file_list:
-    extract_attendences_from(csv_file, folder_containing_csvs, db)
+for sub_folder in attendence_folder_list:
+
+    # Create path for the sub folder
+    csv_file_folder = "{0}/{1}".format(folder_containing_attendence, sub_folder)
+
+    # Get year from sub folder name
+    year = re.search("[0-9]+", sub_folder)[0]
+
+    # Get list of files and start cycling through them
+    csv_file_list = listdir_nohidden(csv_file_folder)
+    logging.warning("👀 Checking folder {0}".format(csv_file_folder))
+    logging.info("🚲 Cycling through list of csv files/workshops.")
+
+    for csv_file in csv_file_list:
+        extract_attendences_from(csv_file, csv_file_folder, year, db)
 
 
 
