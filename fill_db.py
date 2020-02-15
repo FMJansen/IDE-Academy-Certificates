@@ -25,8 +25,8 @@ parser = argparse.ArgumentParser(
     description="Fill the ideac database with content from csv files")
 parser.add_argument("-v", "--verbose", action='count', default=0,
     help="increase output verbosity")
-parser.add_argument("-f", "--folder", action="store",
-    help="folder with the csv files (defaults to ./csv)")
+parser.add_argument("-a", "--attendence", action="store",
+    help="folder with the folders of csv files for the attendence (defaults to ./csv) - make sure the subfolders contain the semester (start month + year, 'Sep YYYY' or 'Feb YYYY') in which the workshop was held")
 parser.add_argument("-r", "--replace", action="store_true",
     help="[DANGEROUS 🚫] replace all content in the database")
 
@@ -80,18 +80,7 @@ def listdir_nohidden(path):
 
 
 
-# Create database if it doesn’t exist yet
-db.create_all()
-logging.info("💽 Database created.")
-
-# Get amount of rows at the start
-start_amount = db.session.query(Attendence).count()
-
-# Get list of files and start cycling through them
-csv_file_list = listdir_nohidden(args.folder)
-logging.info("🚲 Cycling through list of csv files/workshops.")
-for csv_file in csv_file_list:
-
+def extract_attendences_from(csv_file, folder, db):
     # Get workshop name and date
     workshop = re.sub(" - Attempt Details.csv", "", csv_file)
     workshop = re.sub("Attendance for ", "", workshop)
@@ -101,7 +90,7 @@ for csv_file in csv_file_list:
     workshop_name = workshop_name.strip()
 
     # Open csv file as text
-    file_path = '{0}/{1}'.format(args.folder, csv_file)
+    file_path = '{0}/{1}'.format(folder, csv_file)
     with open(file_path, 'rt') as csv_file:
 
         logging.info("Workshop name: {0} held on {1}".format(workshop_name,
@@ -170,6 +159,30 @@ for csv_file in csv_file_list:
 
 
 
+# Create database if it doesn’t exist yet
+db.create_all()
+logging.info("💽 Database created.")
+
+# Get amount of rows at the start
+start_amount = db.session.query(Attendence).count()
+
+# Get folder with the csv files to cycle through
+folder_containing_csvs = args.attendence
+
+# Get list of files and start cycling through them
+csv_file_list = listdir_nohidden(folder_containing_csvs)
+logging.info("🚲 Cycling through list of csv files/workshops.")
+
+for csv_file in csv_file_list:
+    extract_attendences_from(csv_file, folder_containing_csvs, db)
+
+
+
+
+
+# Get amount of rows at the end
 new_amount = db.session.query(Attendence).count()
+
+# Calculate the amount of added rows
 amount_added = new_amount - start_amount
 logging.warning("✅ All done. Added {0} rows. New amount of attendences: {1}".format(amount_added, new_amount))
