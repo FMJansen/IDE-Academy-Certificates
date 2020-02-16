@@ -26,7 +26,8 @@ def send_js(kind, path):
 
 @app.route("/certificate/<int:student_number>/<name>/")
 def generate_certificate(student_number, name):
-    attendences = Attendence.query.filter_by(student_number=student_number)
+    attendences = Attendence.query.filter_by(student_number=student_number)\
+        .order_by(Attendence.workshop_date)
     return render_template("certificate.html",
         attendences=attendences.all(),
         name=name,
