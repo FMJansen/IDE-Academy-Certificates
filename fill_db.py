@@ -120,7 +120,7 @@ def extract_grades(grades_folder):
                             workshop_date = datetime.now()
 
                         # Get workshop name
-                        workshop_name = re.sub("([A-Z])\w+ [0-9]+", "", workshop)
+                        workshop_name = re.sub("([A-Z])([a-z])+ [0-9]+( )*(:*)", "", workshop)
                         workshop_name = workshop_name.strip()
 
                         new_attendence = Attendence(
