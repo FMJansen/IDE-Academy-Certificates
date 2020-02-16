@@ -97,7 +97,7 @@ def extract_grades(grades_folder):
             logging.info("🎓 Go through grades file.")
 
             # Process csv file
-            student_dict = csv.DictReader(csv_file, delimiter=";")
+            student_dict = csv.DictReader(csv_file)
 
             # Loop through rows of file
             for student in student_dict:
