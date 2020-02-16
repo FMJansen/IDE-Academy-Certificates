@@ -26,7 +26,9 @@ parser = argparse.ArgumentParser(
 parser.add_argument("-v", "--verbose", action='count', default=0,
     help="increase output verbosity")
 parser.add_argument("-a", "--attendence", action="store",
-    help="folder with the folders of csv files for the attendence - make sure the sub folders contain the semester (start month + year, 'Sep YYYY' or 'Feb YYYY') in which the workshop was held [defaults to ./csv]")
+    help="folder with the folders of csv files for the attendence - make sure the sub folders contain the semester (start month + year, 'Sep YYYY' or 'Feb YYYY') in which the workshop was held [defaults to ./attendences]")
+parser.add_argument("-g", "--grades", action="store",
+    help="folder with csv files with the grades [defaults to ./grades]")
 parser.add_argument("-r", "--replace", action="store_true",
     help="[DANGEROUS 🚫] replace all content in the database")
 
@@ -75,6 +77,61 @@ def listdir_nohidden(path):
     for f in os.listdir(path):
         if not f.startswith('.'):
             yield f
+
+
+
+
+def extract_grades(grades_folder):
+
+    # Get list of files and start cycling through them
+    grades_file_list = listdir_nohidden(grades_folder)
+    logging.warning("👀 Checking folder {0}".format(grades_folder))
+    logging.info("🚲 Cycling through list of grades csv files.")
+
+    for grades_file in grades_file_list:
+
+        file_path = '{0}/{1}'.format(grades_folder, grades_file)
+        with open(file_path, 'rt') as csv_file:
+
+            logging.info("🎓 Go through grades file.")
+
+            # Process csv file
+            student_dict = csv.DictReader(csv_file, delimiter=";")
+
+            # Loop through rows of file
+            for student in student_dict:
+
+                try:
+                    student_number = student['\ufeffOrgDefinedId']
+                except KeyError:
+                    student_number = student['OrgDefinedId']
+
+                for key, value in student.items():
+
+                    if value == 'Present':
+
+                        workshop = re.sub(" Scheme Symbol", "", key)
+
+                        # Get workshop date
+                        try:
+                            workshop_date = re.search("([A-Z])\w+ [0-9]+", workshop)
+                            workshop_date = datetime.strptime(workshop_date[0], "%b %d")
+                        except TypeError:
+                            workshop_date = datetime.now()
+
+                        # Get workshop name
+                        workshop_name = re.sub("([A-Z])\w+ [0-9]+", "", workshop)
+                        workshop_name = workshop_name.strip()
+
+                        new_attendence = Attendence(
+                            student_number = int(student_number),
+                            workshop_name = workshop_name,
+                            workshop_date = workshop_date,
+                        )
+
+                        db.session.add(new_attendence)
+
+            db.session.commit()
 
 
 
@@ -198,6 +255,10 @@ logging.info("💽 Database created.")
 
 # Get amount of rows at the start
 start_amount = db.session.query(Attendence).count()
+
+# Get folder with the csv files to cycle through and start cycling through them
+grades_folder = args.grades
+extract_grades(grades_folder)
 
 # Get folder with the csv files to cycle through
 folder_containing_attendence = args.attendence
