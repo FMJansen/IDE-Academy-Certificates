@@ -16,6 +16,7 @@ class Attendence(db.Model):
     student_number = db.Column(db.Integer, nullable=False)
     workshop_name = db.Column(db.String(255), nullable=False)
     workshop_date = db.Column(db.DateTime)
+    date_str = db.Column(db.String(255), nullable=True)
     rating = db.Column(db.Integer, nullable=True)
     future_self = db.Column(db.Text, nullable=True)
 
