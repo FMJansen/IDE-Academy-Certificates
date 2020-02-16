@@ -238,12 +238,7 @@ def extract_ratings_from(csv_file, folder, year, db):
 
 
 
-        logging.info("Some example data from this set:")
-        logging.info("Message to future self: {0}".format(current_attendence.future_self))
-        logging.info("Rating: {0}".format(current_attendence.rating))
-
-        # Done with looping so save last attendence
-        db.session.add(current_attendence)
+        logging.info("Some example data from this set: Message to future self [{0}] and rating [{1}]".format(current_attendence.future_self, current_attendence.rating))
 
         # Save attendences from this workshop to db
         logging.info("Saving last attendence to database")
