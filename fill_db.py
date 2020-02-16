@@ -125,8 +125,14 @@ def extract_grades(grades_folder):
                         workshop_name = re.sub("([A-Z])([a-z])+ [0-9]+( )*(:*)", "", workshop)
                         workshop_name = workshop_name.strip()
 
+                        try:
+                            student_number = int(student_number)
+                        except ValueError:
+                            student_number = re.sub("#", "", student_number)
+                            student_number = int(student_number)
+
                         new_attendence = Attendence(
-                            student_number = int(student_number),
+                            student_number = student_number,
                             workshop_name = workshop_name,
                             workshop_date = workshop_date,
                             date_str = date_str
