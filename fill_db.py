@@ -81,6 +81,7 @@ def listdir_nohidden(path):
 
 
 
+# Define function to get the attendences from csv files in grades folder
 def extract_grades(grades_folder):
 
     # Get list of files and start cycling through them
@@ -115,6 +116,7 @@ def extract_grades(grades_folder):
                         # Get workshop date
                         try:
                             workshop_date = re.search("([A-Z])\w+ [0-9]+", workshop)
+                            date_str = workshop_date[0]
                             workshop_date = datetime.strptime(workshop_date[0], "%b %d")
                         except TypeError:
                             workshop_date = datetime.now()
@@ -127,6 +129,7 @@ def extract_grades(grades_folder):
                             student_number = int(student_number),
                             workshop_name = workshop_name,
                             workshop_date = workshop_date,
+                            date_str = date_str
                         )
 
                         db.session.add(new_attendence)
@@ -137,16 +140,27 @@ def extract_grades(grades_folder):
 
 
 
-# Define function to get the attendences from one csv file
-def extract_attendences_from(csv_file, folder, year, db):
+# Define function to get the ratings and messages from one csv file
+def extract_ratings_from(csv_file, folder, year, db):
     # Get workshop name and date
     workshop = re.sub(" - Attempt Details.csv", "", csv_file)
     workshop = re.sub("Attendance for ", "", workshop)
     workshop_date = re.search("([A-Z])\w+ [0-9]+", workshop)
+    date_str = workshop_date[0]
     workshop_date = "{0} {1}".format(workshop_date[0], year)
     workshop_date = datetime.strptime(workshop_date, "%b %d %Y")
     workshop_name = re.sub("([A-Z])\w+ [0-9]+", "", workshop)
     workshop_name = workshop_name.strip()
+
+    attendence = Attendence.query.filter(
+        Attendence.workshop_name.ilike(workshop_name),
+        Attendence.date_str == date_str).first()
+
+    if attendence is None:
+        logging.info("❓ Workshop in grades file, but no matching workshop found in quiz csv files")
+        return
+    else:
+        logging.debug("{0} on {1}".format(attendence.workshop_name, attendence.date_str))
 
     """
     January workshops are in the folder of the semester starting in the previous year, so the year should be the one after that of September
@@ -172,30 +186,46 @@ def extract_attendences_from(csv_file, folder, year, db):
         # Loop through rows of file
         for question in question_dict:
             if not current_student_number:
-                logging.debug("Creating first attendence")
-                current_student_number = question['Org Defined ID']
-
-                # Build new attendencee
-                current_attendence = Attendence(
-                    student_number = int(question['Org Defined ID']),
-                    workshop_name = workshop_name,
-                    workshop_date = workshop_date,
-                )
-
-            elif question['Org Defined ID'] != current_student_number:
-                # New attendence, so save previous one
-                logging.debug("Adding attendence to db")
-                db.session.add(current_attendence)
+                logging.debug("Finding first attendence")
 
                 # Update current student number
                 current_student_number = question['Org Defined ID']
 
-                # Build new attendencee
-                current_attendence = Attendence(
-                    student_number = int(current_student_number),
-                    workshop_name = workshop_name,
-                    workshop_date = workshop_date,
-                )
+                # Get new attendencee
+                current_attendence = Attendence.query.filter(
+                    Attendence.workshop_name.ilike(workshop_name),
+                    Attendence.date_str == date_str,
+                    Attendence.student_number == int(current_student_number))\
+                    .first()
+
+                if current_attendence is None:
+                    logging.debug("🚨 Student {0} wasn’t present".format(current_student_number))
+                    return
+                else:
+                    # Update workshop date to include year
+                    current_attendence.workshop_date = workshop_date
+
+            elif question['Org Defined ID'] != current_student_number:
+                # New attendence, so save previous one
+                logging.debug("Saving attendence to db")
+                db.session.commit()
+
+                # Update current student number
+                current_student_number = question['Org Defined ID']
+
+                # Get new attendencee
+                current_attendence = Attendence.query.filter(
+                    Attendence.workshop_name.ilike(workshop_name),
+                    Attendence.date_str == date_str,
+                    Attendence.student_number == int(current_student_number))\
+                    .first()
+
+                if current_attendence is None:
+                    logging.debug("🚨 Student {0} wasn’t present".format(current_student_number))
+                    return
+                else:
+                    # Update workshop date to include year
+                    current_attendence.workshop_date = workshop_date
 
             # Add rating to current attendence
             if "familiar" in question['Q Text'] and question['Answer Match'] == "Checked":
@@ -216,15 +246,16 @@ def extract_attendences_from(csv_file, folder, year, db):
         db.session.add(current_attendence)
 
         # Save attendences from this workshop to db
-        logging.info("Saving attendences to database")
+        logging.info("Saving last attendence to database")
         db.session.commit()
 
-        logging.info("☑️  Done with {0}".format(workshop_name))
+    logging.info("☑️  Done with {0}".format(workshop_name))
 
 
 
 
 
+# Define function to go through list of folders with quiz data (rating/messages)
 def cycle_through_folder_list(attendence_folder_list):
 
     logging.info("🚴‍♀️ Cycling through list of sub folders")
@@ -243,7 +274,7 @@ def cycle_through_folder_list(attendence_folder_list):
         logging.info("🚲 Cycling through list of csv files/workshops.")
 
         for csv_file in csv_file_list:
-            extract_attendences_from(csv_file, csv_file_folder, year, db)
+            extract_ratings_from(csv_file, csv_file_folder, year, db)
 
 
 
