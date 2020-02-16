@@ -150,7 +150,7 @@ def extract_grades(grades_folder):
 def extract_ratings_from(csv_file, folder, year, db):
     # Get workshop name and date
     workshop = re.sub(" - Attempt Details.csv", "", csv_file)
-    workshop = re.sub("Attendance for ", "", workshop)
+    workshop = re.sub("(_)*Attendance for ", "", workshop)
     workshop_date = re.search("([A-Z])\w+ [0-9]+", workshop)
     date_str = workshop_date[0]
     workshop_date = "{0} {1}".format(workshop_date[0], year)
