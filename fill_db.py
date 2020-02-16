@@ -163,7 +163,7 @@ def extract_ratings_from(csv_file, folder, year, db):
         Attendence.date_str == date_str).first()
 
     if attendence is None:
-        logging.info("❓ Workshop in grades file, but no matching workshop found in quiz csv files")
+        logging.warning("❓ Workshop {0} on {1} in quiz csv files, but no matching workshop found in grades file".format(workshop_name, date_str))
         return
     else:
         logging.debug("{0} on {1}".format(attendence.workshop_name, attendence.date_str))
