@@ -23,8 +23,10 @@
         {% endif %}>
         <span class="workshop__name">
           {{ workshop.workshop_name }}</span>
+        {% if workshop.workshop_date.year != 1900 %}
         <span class="workshop__date">
           ({{ workshop.workshop_date.strftime("%B %Y") }})</span>
+        {% endif %}
       </li>
     {% endfor %}
   </ul>
