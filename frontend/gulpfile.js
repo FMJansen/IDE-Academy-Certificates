@@ -113,7 +113,6 @@ gulp.task('images', function() {
  * WATCH *
  *********/
 gulp.task('watch', function() {
-  livereload.listen();
    // Watch .js files
   gulp.watch(src + 'js/*.js', gulp.task('scriptsDev'));
    // Watch .scss files
