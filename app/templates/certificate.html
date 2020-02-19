@@ -1,4 +1,7 @@
 <section class="certificate">
+
+  <link href="https://fonts.googleapis.com/css?family=EB+Garamond:400,400i,800,800i|Satisfy&display=swap" rel="stylesheet">
+
   <h2 class="certificate__title">
     IDE Academy Certificate
   </h2>
@@ -19,7 +22,7 @@
     {% for workshop in attendences %}
       <li class="workshop"
         {% if workshop.rating %}
-          style="--rating: {{ workshop.rating / 5 }}"
+          style="--rating: {{ workshop.rating / 5 - 0.1 }}"
         {% endif %}>
         <span class="workshop__name">
           {{ workshop.workshop_name }}</span>

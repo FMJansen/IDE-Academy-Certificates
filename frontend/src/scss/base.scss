@@ -23,7 +23,8 @@
 /*-------------------------------------*\
   Variables (colors and fonts)
 \*-------------------------------------*/
-$font: 'Arial', sans-serif;
+$font: 'IBM Plex Mono', monospace;
+$cert-font: 'EB Garamond', serif;
 $background--light: #fff;
 $accent: red;
 
@@ -53,15 +54,10 @@ body {
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
   margin: 0;
-  padding-top: 4em;
   word-wrap: break-word;
 
   @media (min-width: $brk--tablet) {
     font-size: 18px;
-  }
-
-  @media (min-width: $brk--desktop) {
-    font-size: 20px;
   }
 }
 
@@ -145,6 +141,14 @@ a {
   }
 }
 
+.site-header {
+  padding: 2.5vw 5vw;
+
+  &__name {
+    font-size: 1.75em;
+  }
+}
+
 
 
 
@@ -152,9 +156,129 @@ a {
 /*-------------------------------------*\
   Main
 \*-------------------------------------*/
+.start {
+  padding: 0 5vw;
+
+  &__introduction {
+    max-width: 44rem;
+  }
+
+  &__status {
+    background: #335;
+    color: white;
+    font-weight: bold;
+    margin: 1em 0;
+    padding: .5em 1em;
+
+    &:empty {
+      display: none;
+    }
+  }
+
+  &__field {
+    display: block;
+    font-weight: bold;
+    margin: 3em 0;
+    max-width: 33rem;
+    width: 100%;
+  }
+
+  &__input {
+    border: 0;
+    border-bottom: .2em solid black;
+    box-sizing: border-box;
+    display: block;
+    font-size: 1em;
+    margin: 1em 0;
+    padding: .5em 0;
+    width: 100%;
+
+    &:hover {
+      background: #eee;
+    }
+
+    &:focus {
+      border-color: blue;
+    }
+  }
+
+  &__submit {
+    background: none;
+    border: .2em solid black;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: bold;
+    padding: 1em;
+
+    &:hover,
+    &:focus {
+      background: blue;
+      color: white;
+    }
+  }
+}
+
+.cert-container {
+  background: #fff6eb;
+  bottom: -295vh;
+  left: 50vw;
+  max-width: 90vw;
+  overflow: scroll;
+  position: fixed;
+  top: 205vh;
+  transform: translateX(-50%);
+  transition: box-shadow 400ms ease-out,
+    top 400ms ease-out,
+    bottom 400ms ease-out;
+  width: 38em;
+  z-index: 2;
+
+  @media (min-width: $brk--tablet) {
+    font-size: 1.4vw;
+  }
+
+  &.show {
+    bottom: 5vh;
+    box-shadow: 0 1em 2em transparentize(black, .7),
+      0 0 0 50vw transparentize(black, .7);
+    top: 5vh;
+  }
+}
+
 .certificate {
-  border: 1px solid $accent;
-  padding: 2em;
+  font-family: $cert-font;
+  padding: 3em;
+  text-align: center;
+
+  &__title {
+    font-family: $cert-font;
+  }
+
+  &__text {
+    font-style: italic;
+  }
+
+  &__name {
+    color: #007;
+    font-family: 'Satisfy', display;
+    font-size: 3em;
+    font-weight: 800;
+    margin: .5em 0 0;
+  }
+
+  &__workshops {
+    list-style: none;
+    padding: 0;
+  }
+}
+
+.workshop {
+  margin: .5em 0;
+  opacity: var(--rating, 1);
+
+  &__name {
+    font-weight: bold;
+  }
 }
 
 
@@ -165,3 +289,8 @@ a {
 /*-------------------------------------*\
   Footer
 \*-------------------------------------*/
+.version {
+  opacity: .5;
+  padding: 5vw;
+  text-align: center;
+}

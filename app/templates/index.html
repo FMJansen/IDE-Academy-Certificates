@@ -11,12 +11,13 @@
 
     <script src="/static/js/main.js" charset="utf-8" async></script>
     <link rel="stylesheet" href="/static/css/main.css">
+    <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Mono:400,700&display=swap" rel="stylesheet">
 
   </head>
   <body>
 
     <header class="site-header">
-      <h1>IDE Academy Certificates</h1>
+      <h1 class="site-header__name">IDE Academy Certificates</h1>
     </header>
 
     <main>
@@ -24,24 +25,33 @@
       <section class="start">
 
         <p class="start__introduction">
-          ...
+          You did a few workshops, great! But do you remember which ones? And how do you show that to your parents/future employer/friends/enemies? You generate your own certificate based on your attendence and quiz data in BrightSpace. The better you thought the workshop was, the more prominently it shows.
         </p>
 
         <form class="start__questions"
           action="/certificate/" method="post"
           onsubmit="event.preventDefault(); getCertificate();">
 
-          <label for="student_number">
-            What’s your student number?
-            <input type="text" name="student_number" placeholder="4444444">
-          </label>
+          <div class="start__status" id="form-status"></div>
 
-          <label for="name">
-            What name do you want on your certificate?
-            <input type="text" name="name" placeholder="Sam Janssen">
-          </label>
+          <div class="start__field">
+            <label for="student_number">
+              What’s your student number?
+              <input type="text" class="start__input" required
+                name="student_number" placeholder="4444444">
+            </label>
+          </div>
 
-          <button type="submit" name="get_certificate">
+          <div class="start__field">
+            <label for="name">
+              What name do you want on your certificate?
+              <input type="text" class="start__input" required
+                name="name" placeholder="Sam Janssen">
+            </label>
+          </div>
+
+          <button type="submit" class="start__submit"
+            name="get_certificate">
             Generate my certificate
           </button>
 
