@@ -1,3 +1,15 @@
 # coding=utf-8
 
-db_path = "/absolute/path/to/dabatase.db"
+DATABASE_PATH = "/absolute/path/to/dabatase.db"
+SECRET_KEY = 'not a secret'
+SERVER_NAME = '127.0.0.1:5000'
+
+KEY_DIR = Path(__file__).parent.parent.parent / 'keys' / 'sample'
+CERTIFICATE_FILE = KEY_DIR / 'sp-certificate.pem'
+PRIVATE_KEY_FILE = KEY_DIR / 'sp-private-key.pem'
+
+IDP_DISPLAY_NAME = 'Local IDP'
+IDP_METADATA = 'http://localhost:8000/saml/metadata.xml'
+IDP_SSP = 'http://localhost:8000/saml/login/'
+IDP_SLO = 'http://localhost:8000/saml/logout/'
+IDP_CERTIFICATE_FILE = KEY_DIR / 'idp-certificate.pem'
