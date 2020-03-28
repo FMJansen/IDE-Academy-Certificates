@@ -23,10 +23,12 @@
 /*-------------------------------------*\
   Variables (colors and fonts)
 \*-------------------------------------*/
-$font: 'IBM Plex Mono', monospace;
-$cert-font: 'EB Garamond', serif;
+$font: 'Courier New', monospace;
+$title-font: 'DIN Condensed', sans-serif;
+$cert-font: $font;
 $background--light: #fff;
-$accent: red;
+$accent: #066c9d;
+$pattern-color: transparentize($accent, .7);
 
 // Breakpoints
 $brk--phone: 768px;
@@ -74,8 +76,9 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: $font;
+  font-family: $title-font;
   font-weight: 700;
+  text-transform: uppercase;
 }
 
 a {
@@ -198,7 +201,7 @@ a {
     }
 
     &:focus {
-      border-color: blue;
+      border-color: $accent;
     }
   }
 
@@ -212,14 +215,14 @@ a {
 
     &:hover,
     &:focus {
-      background: blue;
+      background: $accent;
       color: white;
     }
   }
 }
 
 .cert-container {
-  background: #fff6eb;
+  background-color: white;
   bottom: -295vh;
   left: 50vw;
   max-width: 90vw;
@@ -246,20 +249,21 @@ a {
 }
 
 .certificate {
+  background-image: radial-gradient($pattern-color .075em, transparent .075em),
+    radial-gradient($pattern-color .075em, transparent .075em);
+  background-position: 0 0, 20px 20px;
+  background-size: 40px 40px;
   font-family: $cert-font;
-  padding: 3em;
-  text-align: center;
+  padding: 4em;
 
   &__title {
-    font-family: $cert-font;
-  }
-
-  &__text {
-    font-style: italic;
+    font-family: $title-font;
+    font-size: 2.5em;
+    margin-top: .25em;
   }
 
   &__name {
-    color: #007;
+    color: $accent;
     font-family: 'Satisfy', display;
     font-size: 3em;
     font-weight: 800;
