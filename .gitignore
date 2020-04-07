@@ -6,3 +6,6 @@ envvars.py
 *.db
 frontend/node_modules
 static/
+ideac.ini
+ideacenv/
+wsgi.py
