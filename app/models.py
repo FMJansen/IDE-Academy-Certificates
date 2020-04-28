@@ -14,6 +14,7 @@ class Attendence(db.Model):
     # Define columns/properties
     id = db.Column(db.Integer, primary_key=True)
     student_number = db.Column(db.Integer, nullable=False)
+    netid = db.Column(db.String(255), nullable=False)
     workshop_name = db.Column(db.String(255), nullable=False)
     workshop_date = db.Column(db.DateTime)
     date_str = db.Column(db.String(255), nullable=True)
