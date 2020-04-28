@@ -30,6 +30,10 @@
         <span class="workshop__date">
           ({{ workshop.workshop_date.strftime("%B %Y") }})</span>
         {% endif %}
+        {% if workshop.future_self != None %}
+        <span class="workshop__feedback"><br>
+          {{ workshop.future_self }}</span>
+        {% endif %}
       </li>
     {% endfor %}
   </ul>
@@ -37,4 +41,5 @@
   <p class="certificate__text">
     As of {{ now.strftime("%B %Y") }}
   </p>
+
 </section>
