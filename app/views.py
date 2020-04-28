@@ -24,9 +24,10 @@ def send_js(kind, path):
 
 
 
-@app.route("/certificate/<int:student_number>/<name>/")
-def generate_certificate(student_number, name):
-    attendences = Attendence.query.filter_by(student_number=student_number)\
+@app.route("/certificate/<name>/")
+def generate_certificate(name):
+    auth_data = sp.get_auth_data_in_session()
+    attendences = Attendence.query.filter_by(netid=auth_data.nameid)\
         .order_by(Attendence.workshop_date)
     return render_template("certificate.html",
         attendences=attendences.all(),
@@ -49,22 +50,7 @@ def get_workshops(student_number):
 @app.route("/")
 def index():
     if sp.is_user_logged_in():
-        auth_data = sp.get_auth_data_in_session()
-
-        message = f'''
-        <p>You are logged in as <strong>{auth_data.nameid}</strong>.
-        The IdP sent back the following attributes:<p>
-        '''
-
-        attrs = '<dl>{}</dl>'.format(''.join(
-            f'<dt>{attr}</dt><dd>{value}</dd>'
-            for attr, value in auth_data.attributes.items()))
-
-        logout_url = url_for('flask_saml2_sp.logout')
-        logout = f'<form action="{logout_url}" method="POST"><input type="submit" value="Log out"></form>'
-
-        return message + attrs + logout
-        # return render_template('index.html')
+        return render_template('index.html')
     else:
         login_url = url_for('flask_saml2_sp.login')
         return render_template('splash.html', login_url=login_url)

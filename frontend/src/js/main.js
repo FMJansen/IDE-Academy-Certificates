@@ -1,15 +1,13 @@
 function getCertificate () {
 
   let xhr = new XMLHttpRequest(),
-    studentNumberEl = document.querySelectorAll('[name=student_number]')[0],
-    studentNumber = studentNumberEl.value,
     nameEl = document.querySelectorAll('[name=name]')[0],
     name = nameEl.value,
     formStatus = document.getElementById('form-status'),
     certContainer = document.getElementById('cert-container');
 
   formStatus.innerHTML = "";
-  xhr.open('GET', '/certificate/' + studentNumber + '/' + name);
+  xhr.open('GET', '/certificate/' + name);
   xhr.send(null);
 
   xhr.onreadystatechange = function () {
