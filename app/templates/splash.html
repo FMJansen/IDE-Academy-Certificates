@@ -1,45 +1,18 @@
-<!DOCTYPE html>
-<html>
-  <head>
+{% extends "base.html" %}
 
-    <meta charset="utf-8">
+{% block content %}
 
-    <title>IDE Academy Certificates</title>
+  <section class="start">
 
-    <meta name="robots" content="no-index,no-follow">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <p class="start__introduction">
+      You did a few workshops, great! But do you remember which ones? And how do you show that to your parents/future employer/friends/enemies? You generate your own certificate based on your attendence and quiz data in BrightSpace. The better you thought the workshop was, the more prominently it shows.
+    </p>
 
-    <script src="/static/js/main.js" charset="utf-8" async></script>
-    <link rel="stylesheet" href="/static/css/main.css">
-    <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Mono:400,700&display=swap" rel="stylesheet">
+    <p>
+      <a class="start__submit" href="{{ login_url }}">
+        Login with my NetID
+      </a>
+    </p>
+  </section>
 
-  </head>
-  <body>
-
-    <header class="site-header">
-      <h1 class="site-header__name">IDE Academy Certificates</h1>
-    </header>
-
-    <main>
-
-      <section class="start">
-
-        <p class="start__introduction">
-          You did a few workshops, great! But do you remember which ones? And how do you show that to your parents/future employer/friends/enemies? You generate your own certificate based on your attendence and quiz data in BrightSpace. The better you thought the workshop was, the more prominently it shows.
-        </p>
-
-        <p>
-          <a class="start__submit" href="{{ login_url }}">
-            Login with my NetID
-          </a>
-        </p>
-      </section>
-
-    </main>
-
-    <footer class="version">
-      ideac v0.1
-    </footer>
-
-  </body>
-</html>
+{% endblock %}
