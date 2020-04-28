@@ -136,6 +136,10 @@ def extract_grades(grades_folder):
                             student_number = re.sub("#", "", student_number)
                             student_number = int(student_number)
 
+                        # Clean up NetID
+                        netid = re.sub("#", "", netid)
+                        netid = re.sub("@tudelft.nl", "", netid)
+
                         new_attendence = Attendence(
                             student_number = student_number,
                             netid = netid,
