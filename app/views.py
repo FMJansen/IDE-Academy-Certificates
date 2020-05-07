@@ -7,9 +7,19 @@
 import logging # Logging for debugging
 from datetime import datetime # Showing date on certificate
 from flask import render_template, jsonify, send_from_directory, url_for
+from flask_saml2.exceptions import CannotHandleAssertion
 
 from . import app, sp # Get Flask app and Flask SAML SP
 from .models import Attendence # Get database models
+
+
+
+
+
+@app.errorhandler(CannotHandleAssertion)
+def handle_assertion_exception(err):
+    app.logger.warn("Got an exception in get_auth_data probs: {0}".format(err))
+    return "We can’t handle that SAML", 500
 
 
 
