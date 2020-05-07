@@ -43,6 +43,7 @@ sp = AppServiceProvider()
 app.config['SAML2_SP'] = {
     'certificate': certificate_from_file(CERTIFICATE_FILE),
     'private_key': private_key_from_file(PRIVATE_KEY_FILE),
+    'nameid_format': 'urn:oasis:names:tc:SAML:2.0:nameid-format:persistent',
 }
 
 app.config['SAML2_IDENTITY_PROVIDERS'] = [
