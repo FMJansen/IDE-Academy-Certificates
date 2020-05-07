@@ -7,7 +7,7 @@
 import logging
 from flask import Flask, url_for
 from flask_sqlalchemy import SQLAlchemy
-from .envvars import DATABASE_PATH, SECRET_KEY, SERVER_NAME, CERTIFICATE_FILE, PRIVATE_KEY_FILE, IDP_DISPLAY_NAME, IDP_METADATA, IDP_SSO, IDP_SLO, IDP_CERTIFICATE_FILE
+from .envvars import DATABASE_PATH, SECRET_KEY, SERVER_NAME, CERTIFICATE_FILE, PRIVATE_KEY_FILE, IDP_DISPLAY_NAME, IDP_METADATA, IDP_ENTITY_ID, IDP_SSO, IDP_SLO, IDP_CERTIFICATE_FILE
 from flask_saml2.sp import ServiceProvider
 from flask_saml2.utils import certificate_from_file, private_key_from_file
 
@@ -59,7 +59,7 @@ app.config['SAML2_IDENTITY_PROVIDERS'] = [
     },
 ]
 
-app.register_blueprint(sp.create_blueprint(), url_prefix='/saml/')
+app.register_blueprint(sp.create_blueprint(entity_id=IDP_ENTITY_ID), url_prefix='/saml/')
 
 
 
