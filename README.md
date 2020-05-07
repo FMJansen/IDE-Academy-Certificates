@@ -10,6 +10,7 @@ To set up the backend:
 4. Activate the virtualenv: `. venv/bin/activate` (Windows: `venv\scripts\activate`)
 5. Run `pip install -r ./requirements.txt` to install all depencencies
 6. `python fill_db.py` to fill the database with the known workshops, or check out `python fill_db.py -h` first to see the options
+7. As IDP, [flask-saml2](https://github.com/timheap/flask-saml2) provides an example, which can be run at `./examples/idp.py` after some config
 
 To run it: `python run.py`
 
