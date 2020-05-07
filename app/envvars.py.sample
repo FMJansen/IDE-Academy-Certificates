@@ -10,7 +10,6 @@ PRIVATE_KEY_FILE = KEY_DIR / 'sp-private-key.pem'
 
 IDP_DISPLAY_NAME = 'Local IDP'
 IDP_METADATA = 'http://localhost:8000/saml/metadata.xml'
-IDP_ENTITY_ID = 'http://localhost:8000/saml/metadata.xml'
 IDP_SSP = 'http://localhost:8000/saml/login/'
 IDP_SLO = 'http://localhost:8000/saml/logout/'
 IDP_CERTIFICATE_FILE = KEY_DIR / 'idp-certificate.pem'
