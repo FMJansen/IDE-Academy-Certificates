@@ -37,7 +37,8 @@ def send_js(kind, path):
 @app.route("/certificate/<name>/")
 def generate_certificate(name):
     auth_data = sp.get_auth_data_in_session()
-    attendences = Attendence.query.filter_by(netid=auth_data.nameid)\
+    netid = auth_data.attributes['urn:mace:dir:attribute-def:uid']
+    attendences = Attendence.query.filter_by(netid=netid)\
         .order_by(Attendence.workshop_date)
     return render_template("certificate.html",
         attendences=attendences.all(),
