@@ -47,17 +47,6 @@ def generate_certificate(name):
 
 
 
-@app.route("/get_workshops/<int:student_number>/")
-def get_workshops(student_number):
-    attendences = Attendence.query.filter_by(student_number=student_number)
-    logging.warn("ℹ️  Amount of attendences: {0}".format(attendences.count()))
-    if attendences is not None:
-        return jsonify([i.serialize for i in attendences.all()])
-    else:
-        return "No attendences."
-
-
-
 @app.route("/")
 def index():
     if sp.is_user_logged_in():
