@@ -34,6 +34,10 @@
         <span class="workshop__feedback"><br>
           {{ workshop.future_self }}</span>
         {% endif %}
+        {% if workshop.course_feedback != None %}
+        <span class="workshop__feedback"><br>
+          {{ workshop.course_feedback }}</span>
+        {% endif %}
       </li>
     {% endfor %}
   </ul>

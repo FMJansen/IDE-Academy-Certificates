@@ -252,6 +252,10 @@ def extract_ratings_from(csv_file, folder, year, db):
             if "future" in question['Q Text']:
                 current_attendence.future_self = question['Answer Match']
 
+            # Add the workshop feedback to current attendence
+            if "staff" in question['Q Text']:
+                current_attendence.course_feedback = question['Answer Match']
+
 
 
         logging.info("Some example data from this set: Message to future self [{0}] and rating [{1}]".format(current_attendence.future_self, current_attendence.rating))
