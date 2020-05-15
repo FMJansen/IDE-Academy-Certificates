@@ -1,10 +1,23 @@
+{% extends "base.html" %}
+
+{% block header %}
+IDE Academy Certificate
+{% endblock %}
+
+{% block content %}
+
+<nav class="sub-page-navigation">
+  <p class="sub-page-navigation__go">
+    <a href="/">Back to the first page</a> (for example to change your name)
+  </p>
+  <p class="sub-page-navigation__tip">
+    💡 Pro-tip: print this page, but then really save it as a PDF (#savethetrees🌲)
+  </p>
+</nav>
+
 <section class="certificate">
 
   <link href="https://fonts.googleapis.com/css?family=EB+Garamond:400,400i,800,800i|Satisfy&display=swap" rel="stylesheet">
-
-  <h2 class="certificate__title">
-    IDE Academy Certificate
-  </h2>
 
   <p class="certificate__text">
     The staff of the course IDE Academy at the Faculty of Industrial Design Engineering of the Delft University of Technology recognizes that
@@ -47,3 +60,9 @@
   </p>
 
 </section>
+
+{% endblock %}
+
+{% block footer %}
+IDE Academy at the Faculty of Industrial Design Engineering of the Delft University of Technology
+{% endblock %}

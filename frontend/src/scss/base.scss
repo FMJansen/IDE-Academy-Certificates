@@ -285,6 +285,31 @@ a {
   }
 }
 
+.sub-page-navigation {
+  background: $accent;
+  color: white;
+  padding: 1em;
+  text-align: center;
+
+  @media print {
+    display: none;
+  }
+
+  a {
+    color: white;
+    font-weight: bold;
+  }
+
+  &__tip {
+    background: #eee;
+    border-radius: .2rem;
+    color: black;
+    display: inline-block;
+    margin-top: 0;
+    padding: .75em;
+  }
+}
+
 
 
 
