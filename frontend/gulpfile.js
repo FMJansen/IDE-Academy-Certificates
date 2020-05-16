@@ -133,14 +133,13 @@ gulp.task('watch', function() {
 gulp.task('serve', function() {
 
     browserSync.init({
-        files: ['_site/**'],
+        files: ['src/**'],
         port: 3000,
         proxy: '127.0.0.1:5000'
     });
 
     gulp.watch(src + "scss/*.scss", gulp.series('sassDev'));
     gulp.watch(src + "js/*.js", gulp.series('scriptsDev'));
-    gulp.watch("../app/templates/*.html").on('change', browserSync.reload);
 });
 
 
@@ -151,7 +150,11 @@ gulp.task('serve', function() {
  * DEFAULT *
  ***********/
 // Default task
-gulp.task('default', gulp.series('scriptsDev', 'sassDev', 'copy-scss', 'images', 'watch'));
+gulp.task('default',
+  gulp.series('serve',
+    gulp.parallel('scriptsDev', 'sassDev', 'copy-scss', 'images', 'serve', 'watch')
+  )
+);
 
 
 
