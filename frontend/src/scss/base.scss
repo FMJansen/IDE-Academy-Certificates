@@ -61,6 +61,11 @@ body {
   @media (min-width: $brk--tablet) {
     font-size: 18px;
   }
+
+  @media print {
+    font-size: 11px;
+    padding: 5vw 2.5vw;
+  }
 }
 
 
@@ -149,6 +154,12 @@ a {
 
   &__name {
     font-size: 1.75em;
+    line-height: 1;
+    margin-bottom: .25em;
+
+    @media print {
+      text-align: center;
+    }
   }
 }
 
@@ -221,40 +232,18 @@ a {
   }
 }
 
-.cert-container {
-  background-color: white;
-  bottom: -295vh;
-  left: 50vw;
-  max-width: 90vw;
-  overflow: scroll;
-  position: fixed;
-  top: 205vh;
-  transform: translateX(-50%);
-  transition: box-shadow 400ms ease-out,
-    top 400ms ease-out,
-    bottom 400ms ease-out;
-  width: 38em;
-  z-index: 2;
-
-  @media (min-width: $brk--tablet) {
-    font-size: 1.4vw;
-  }
-
-  &.show {
-    bottom: 5vh;
-    box-shadow: 0 1em 2em transparentize(black, .7),
-      0 0 0 50vw transparentize(black, .7);
-    top: 5vh;
-  }
-}
-
 .certificate {
   background-image: radial-gradient($pattern-color .075em, transparent .075em),
     radial-gradient($pattern-color .075em, transparent .075em);
   background-position: 0 0, 20px 20px;
   background-size: 40px 40px;
   font-family: $cert-font;
-  padding: 4em;
+  padding: 4em 10vw;
+
+  @media print {
+    padding: 0 5vw;
+    text-align: center;
+  }
 
   &__title {
     font-family: $title-font;
@@ -265,23 +254,74 @@ a {
   &__name {
     color: $accent;
     font-family: 'Satisfy', display;
-    font-size: 3em;
+    font-size: 4.5em;
     font-weight: 800;
     margin: .5em 0 0;
   }
 
   &__workshops {
+    border-top: 1px solid #ddd;
     list-style: none;
+    margin: 2em 0;
     padding: 0;
+
+    @media print {
+      text-align: left;
+    }
   }
 }
 
 .workshop {
+  border-bottom: 1px solid #ddd;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
   margin: .5em 0;
   opacity: var(--rating, 1);
+  padding: .5em 0 1em;
 
   &__name {
+    flex-grow: 1;
+    flex-shrink: 1;
     font-weight: bold;
+    width: 60%;
+
+    @media screen {
+      font-size: 1.2em;
+    }
+  }
+
+  &__date {
+    flex-grow: 1;
+    flex-shrink: 1;
+    text-align: right;
+    width: 40%;
+  }
+
+  &__future-self {
+    flex-grow: 1;
+    max-width: 44em;
+    width: 20em;
+
+    @media print {
+      display: none;
+    }
+  }
+
+  &__course-feedback {
+    flex-grow: 1;
+    max-width: 44em;
+    width: 20em;
+
+    @media print {
+      display: none;
+    }
+  }
+}
+
+@media (min-width: 800px) {
+  .workshop__future-self + .workshop__course-feedback {
+    margin-left: 2em;
   }
 }
 
@@ -322,4 +362,9 @@ a {
   opacity: .5;
   padding: 5vw;
   text-align: center;
+
+  @media print {
+    position: absolute;
+    bottom: 0;
+  }
 }
