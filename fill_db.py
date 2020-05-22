@@ -26,9 +26,9 @@ parser = argparse.ArgumentParser(
 parser.add_argument("-v", "--verbose", action='count', default=0,
     help="increase output verbosity")
 parser.add_argument("-a", "--attendence", action="store",
-    help="folder with the folders of csv files for the attendence - make sure the sub folders contain the semester (start month + year, 'Sep YYYY' or 'Feb YYYY') in which the workshop was held [defaults to ./attendences]")
+    help="folder with the folders of csv files for the attendence - make sure the sub folders contain the semester (start month + year, 'Sep YYYY' or 'Feb YYYY') in which the workshop was held")
 parser.add_argument("-g", "--grades", action="store",
-    help="folder with csv files with the grades [defaults to ./grades]")
+    help="folder with csv files with the grades")
 parser.add_argument("-r", "--replace", action="store_true",
     help="[DANGEROUS 🚫] replace all content in the database")
 
@@ -107,6 +107,11 @@ def extract_grades(grades_folder):
                 except KeyError:
                     student_number = student['OrgDefinedId']
 
+                try:
+                    netid = student['\ufeffUsername']
+                except KeyError:
+                    netid = student['Username']
+
                 for key, value in student.items():
 
                     if value == 'Present':
@@ -131,8 +136,13 @@ def extract_grades(grades_folder):
                             student_number = re.sub("#", "", student_number)
                             student_number = int(student_number)
 
+                        # Clean up NetID
+                        netid = re.sub("#", "", netid)
+                        netid = re.sub("@tudelft.nl", "", netid)
+
                         new_attendence = Attendence(
                             student_number = student_number,
+                            netid = netid,
                             workshop_name = workshop_name,
                             workshop_date = workshop_date,
                             date_str = date_str
@@ -241,6 +251,10 @@ def extract_ratings_from(csv_file, folder, year, db):
             # Add the message to future self to current attendence
             if "future" in question['Q Text']:
                 current_attendence.future_self = question['Answer Match']
+
+            # Add the workshop feedback to current attendence
+            if "staff" in question['Q Text']:
+                current_attendence.course_feedback = question['Answer Match']
 
 
 
