@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+  <section class="start">
+
+    <p class="start__introduction">
+      You did a few workshops, great! But do you remember which ones? And how do you show that to your parents/future employer/friends/enemies? You generate your own certificate based on your attendence and quiz data in BrightSpace. The better you thought the workshop was, the more prominently it shows.
+    </p>
+
+    <form class="start__questions"
+      action="/certificate/" method="post">
+
+      <div class="start__status" id="form-status"></div>
+
+      <div class="start__field">
+        <label for="name">
+          What name do you want on your certificate?
+          <input type="text" class="start__input" required
+            name="name" placeholder="Sam Janssen">
+        </label>
+      </div>
+
+      <button type="submit" class="start__submit"
+        name="get_certificate">
+        Generate my certificate
+      </button>
+
+    </form>
+  </section>
+
+  <section class="cert-container" id="cert-container"></section>
+
+{% endblock %}

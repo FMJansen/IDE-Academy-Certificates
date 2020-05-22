@@ -1,0 +1,370 @@
+/*-------------------------------------*\
+
+  IDE Academy Certificates
+
+  - Floris Jansen, floris@fmjansen.nl
+
+  base.scss
+  + Variables (colors and fonts)
+  + Reset
+  + Paragraph styles
+  + Buttons
+  + Header
+  + Main
+  + Footer
+  ...
+
+\*-------------------------------------*/
+
+
+
+
+
+/*-------------------------------------*\
+  Variables (colors and fonts)
+\*-------------------------------------*/
+$font: 'Courier New', monospace;
+$title-font: 'DIN Condensed', sans-serif;
+$cert-font: $font;
+$background--light: #fff;
+$accent: #066c9d;
+$pattern-color: transparentize($accent, .7);
+
+// Breakpoints
+$brk--phone: 768px;
+$brk--tablet: 992px;
+$brk--desktop: 1200px;
+$brk--large-desktop: 1920px;
+
+
+
+
+
+
+/*-------------------------------------*\
+  Reset
+\*-------------------------------------*/
+html {
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+
+body {
+  background: $background--light;
+  font-family: $font;
+  font-size: 16px;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  margin: 0;
+  word-wrap: break-word;
+
+  @media (min-width: $brk--tablet) {
+    font-size: 18px;
+  }
+
+  @media print {
+    font-size: 11px;
+    padding: 5vw 2.5vw;
+  }
+}
+
+
+
+
+
+/*-------------------------------------*\
+  Paragraph styles
+\*-------------------------------------*/
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: $title-font;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+a {
+  color: $accent;
+}
+
+
+
+
+
+/*-------------------------------------*\
+  Buttons
+\*-------------------------------------*/
+@mixin button-background($color) {
+  background: $color;
+
+  &:hover {
+    background: darken($color, 10%);
+  }
+
+  &:focus {
+    background: darken($color, 15%);
+  }
+}
+
+.button {
+  border: 0;
+  border-radius: 3px;
+  color: white;
+  cursor: pointer;
+  display: inline-block;
+  font-family: $font;
+  font-size: 1em;
+  font-weight: bold;
+  margin: 5px 0;
+  padding: .7em 1.2em;
+  text-align: center;
+  text-decoration: none;
+  @include button-background($accent);
+}
+
+
+
+
+
+/*-------------------------------------*\
+  Header
+\*-------------------------------------*/
+.skip {
+  background: white;
+  border: 1px solid black;
+  color: black;
+  display: block;
+  line-height: 1;
+  padding: 1em;
+  position: absolute;
+  top: -5em;
+
+  &:focus {
+    left: 5px;
+    top: 5px;
+    z-index: 100000;
+  }
+}
+
+.site-header {
+  padding: 2.5vw 5vw;
+
+  &__name {
+    font-size: 1.75em;
+    line-height: 1;
+    margin-bottom: .25em;
+
+    @media print {
+      text-align: center;
+    }
+  }
+}
+
+
+
+
+
+/*-------------------------------------*\
+  Main
+\*-------------------------------------*/
+.start {
+  padding: 0 5vw;
+
+  &__introduction {
+    max-width: 44rem;
+  }
+
+  &__status {
+    background: #335;
+    color: white;
+    font-weight: bold;
+    margin: 1em 0;
+    padding: .5em 1em;
+
+    &:empty {
+      display: none;
+    }
+  }
+
+  &__field {
+    display: block;
+    font-weight: bold;
+    margin: 3em 0;
+    max-width: 33rem;
+    width: 100%;
+  }
+
+  &__input {
+    border: 0;
+    border-bottom: .2em solid black;
+    box-sizing: border-box;
+    display: block;
+    font-size: 1em;
+    margin: 1em 0;
+    padding: .5em 0;
+    width: 100%;
+
+    &:hover {
+      background: #eee;
+    }
+
+    &:focus {
+      border-color: $accent;
+    }
+  }
+
+  &__submit {
+    background: none;
+    border: .2em solid black;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: bold;
+    padding: 1em;
+
+    &:hover,
+    &:focus {
+      background: $accent;
+      color: white;
+    }
+  }
+}
+
+.certificate {
+  background-image: radial-gradient($pattern-color .075em, transparent .075em),
+    radial-gradient($pattern-color .075em, transparent .075em);
+  background-position: 0 0, 20px 20px;
+  background-size: 40px 40px;
+  font-family: $cert-font;
+  padding: 4em 10vw;
+
+  @media print {
+    padding: 0 5vw;
+    text-align: center;
+  }
+
+  &__title {
+    font-family: $title-font;
+    font-size: 2.5em;
+    margin-top: .25em;
+  }
+
+  &__name {
+    color: $accent;
+    font-family: 'Satisfy', display;
+    font-size: 4.5em;
+    font-weight: 800;
+    margin: .5em 0 0;
+  }
+
+  &__workshops {
+    border-top: 1px solid #ddd;
+    list-style: none;
+    margin: 2em 0;
+    padding: 0;
+
+    @media print {
+      text-align: left;
+    }
+  }
+}
+
+.workshop {
+  border-bottom: 1px solid #ddd;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin: .5em 0;
+  opacity: var(--rating, 1);
+  padding: .5em 0 1em;
+
+  &__name {
+    flex-grow: 1;
+    flex-shrink: 1;
+    font-weight: bold;
+    width: 60%;
+
+    @media screen {
+      font-size: 1.2em;
+    }
+  }
+
+  &__date {
+    flex-grow: 1;
+    flex-shrink: 1;
+    text-align: right;
+    width: 40%;
+  }
+
+  &__future-self {
+    flex-grow: 1;
+    max-width: 44em;
+    width: 20em;
+
+    @media print {
+      display: none;
+    }
+  }
+
+  &__course-feedback {
+    flex-grow: 1;
+    max-width: 44em;
+    width: 20em;
+
+    @media print {
+      display: none;
+    }
+  }
+}
+
+@media (min-width: 800px) {
+  .workshop__future-self + .workshop__course-feedback {
+    margin-left: 2em;
+  }
+}
+
+.sub-page-navigation {
+  background: $accent;
+  color: white;
+  padding: 1em;
+  text-align: center;
+
+  @media print {
+    display: none;
+  }
+
+  a {
+    color: white;
+    font-weight: bold;
+  }
+
+  &__tip {
+    background: #eee;
+    border-radius: .2rem;
+    color: black;
+    display: inline-block;
+    margin-top: 0;
+    padding: .75em;
+  }
+}
+
+
+
+
+
+
+/*-------------------------------------*\
+  Footer
+\*-------------------------------------*/
+.version {
+  opacity: .5;
+  padding: 5vw;
+  text-align: center;
+
+  @media print {
+    position: absolute;
+    bottom: 0;
+  }
+}
