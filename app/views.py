@@ -6,7 +6,7 @@
 
 import logging # Logging for debugging
 from datetime import datetime # Showing date on certificate
-from flask import render_template, request, send_from_directory, url_for, make_response, redirect
+from flask import render_template, request, send_from_directory, url_for, make_response
 from flask_saml2.exceptions import CannotHandleAssertion
 
 from . import app, sp # Get Flask app and Flask SAML SP
@@ -29,15 +29,6 @@ def handle_assertion_exception(err):
 def send_js(kind, path):
     dir = '../static/{0}'.format(kind)
     return send_from_directory(dir, path)
-
-
-
-
-
-@app.route('/logout/')
-def logout():
-    sp.logout()
-    return redirect(url_for('index'))
 
 
 
