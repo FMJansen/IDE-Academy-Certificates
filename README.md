@@ -18,7 +18,7 @@ IDE Academy Certificates
     3. Returning `value.utcnow().strftime('%Y-%m-%dT%H:%M:%SZ')` in [format_datetime in the idphandler](https://github.com/timheap/flask-saml2/blob/master/flask_saml2/sp/idphandler.py#L263)
 9. In [metadata.xml](https://github.com/timheap/flask-saml2/blob/master/flask_saml2/sp/templates/flask_saml2_sp/metadata.xml#19) the `SingleLogoutService` line should also be removed because Surfconext doesn’t like that
 
-(*) You’ll probably want to run something like `python fill_db.py -g /path/to/grades/ -a /path/to/csv/`, or with the `-r` flag to remove all previous entries so you don’t end up with double ones.
+(*) You’ll probably want to run something like `python fill_db.py -g /path/to/grades/ -a /path/to/quiz/`, or with the `-r` flag to remove all previous entries so you don’t end up with double ones.
 
 ### 🏃‍♀️ To run it:
 `python run.py`
