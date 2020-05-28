@@ -49,6 +49,7 @@ def generate_certificate():
     resp = make_response(render_template("certificate.html",
         attendences=attendences.all(),
         name=name,
+        netid=netid,
         now=datetime.now()))
 
     resp.set_cookie('name', name)
