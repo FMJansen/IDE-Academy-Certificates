@@ -1,7 +1,12 @@
 {% extends "base.html" %}
 
 {% block header %}
-IDE Academy Certificate
+<picture>
+  <source srcset="/static/img/tudelft.svg" type="image/svg">
+  <img src="/static/img/tudelft.png" alt="TU Delft Logo" class="tudelft"
+    srcset="/static/img/tudelft.png 1x, /static/img/tudelft@2x.png 2x">
+</picture>
+<h1 class="site-header__name">IDE Academy Certificate</h1>
 {% endblock %}
 
 {% block content %}
