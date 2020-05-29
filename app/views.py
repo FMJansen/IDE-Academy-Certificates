@@ -6,7 +6,7 @@
 
 import logging # Logging for debugging
 from datetime import datetime # Showing date on certificate
-from flask import render_template, request, send_from_directory, url_for, make_response
+from flask import render_template, request, send_from_directory, url_for, make_response, redirect
 from flask_saml2.exceptions import CannotHandleAssertion
 
 from . import app, sp # Get Flask app and Flask SAML SP
@@ -41,8 +41,10 @@ def generate_certificate():
     else:
         name = request.cookies.get('name')
 
-    auth_data = sp.get_auth_data_in_session()
-    netid = auth_data.attributes['urn:mace:dir:attribute-def:uid']
+    try:
+        auth_data = sp.get_auth_data_in_session()
+    except KeyError:
+        return redirect(url_for('index'), code=302)
     attendences = Attendence.query.filter_by(netid=netid)\
         .order_by(Attendence.workshop_date)
 
