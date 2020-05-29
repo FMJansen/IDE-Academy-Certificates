@@ -60,6 +60,12 @@ def generate_certificate():
 
 
 
+@app.route("/printing/")
+def printing():
+    return render_template('printing.html')
+
+
+
 @app.route("/")
 def index():
     if sp.is_user_logged_in():
