@@ -45,6 +45,7 @@ def generate_certificate():
         auth_data = sp.get_auth_data_in_session()
     except KeyError:
         return redirect(url_for('index'), code=302)
+    netid = auth_data.attributes['urn:mace:dir:attribute-def:uid']
     attendences = Attendence.query.filter_by(netid=netid)\
         .order_by(Attendence.workshop_date)
 
