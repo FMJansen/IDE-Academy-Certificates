@@ -156,10 +156,18 @@ a {
     font-size: 1.75em;
     line-height: 1;
     margin-bottom: .25em;
+  }
+}
 
-    @media print {
-      text-align: center;
-    }
+.tudelft {
+  position: absolute;
+  right: 5vw;
+  top: 2vw;
+  width: 150px;
+
+  @media print {
+    top: 5vw;
+    width: 125px;
   }
 }
 
@@ -278,7 +286,7 @@ a {
   justify-content: space-between;
   margin: .5em 0;
   opacity: var(--rating, 1);
-  padding: .5em 0 1em;
+  padding: .3em 0 .8em;
 
   &__name {
     flex-grow: 1;
@@ -335,7 +343,7 @@ a {
     display: none;
   }
 
-  a {
+  &__go a {
     color: white;
     font-weight: bold;
   }

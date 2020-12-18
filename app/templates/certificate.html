@@ -1,7 +1,12 @@
 {% extends "base.html" %}
 
 {% block header %}
-IDE Academy Certificate
+<picture>
+  <source srcset="/static/img/tudelft.svg" type="image/svg">
+  <img src="/static/img/tudelft.png" alt="TU Delft Logo" class="tudelft"
+    srcset="/static/img/tudelft.png 1x, /static/img/tudelft@2x.png 2x">
+</picture>
+<h1 class="site-header__name">IDE Academy Certificate</h1>
 {% endblock %}
 
 {% block content %}
@@ -11,7 +16,7 @@ IDE Academy Certificate
     <a href="/">Back to the first page</a> (for example to change your name)
   </p>
   <p class="sub-page-navigation__tip">
-    💡 Pro-tip: print this page, but then really save it as a PDF without headers/footers #savethetrees🌲
+    💡 Pro-tip: print this page, but then really save it as a PDF without headers/footers #savetrees🌲 - <a href="/printing/">instructions</a>
   </p>
 </nav>
 
@@ -28,14 +33,14 @@ IDE Academy Certificate
   </p>
 
   <p class="certificate__text">
-    has successfully completed the following workshops:
+    also known by the NetID {{ netid }}, has successfully completed the following workshops:
   </p>
 
   <ul class="certificate__workshops">
     {% for workshop in attendences %}
       <li class="workshop"
         {% if workshop.rating %}
-          style="--rating: {{ workshop.rating / 5 - 0.1 }}"
+          style="--rating: {{ (workshop.rating + 1) / 6 }}"
         {% endif %}>
         <span class="workshop__name">
           {{ workshop.workshop_name }}</span>
@@ -45,12 +50,12 @@ IDE Academy Certificate
         {% endif %}
         {% if workshop.future_self != None and workshop.future_self != "" %}
         <span class="workshop__future-self"><br>
-          <strong>Your comments, tips or compliments for the staff:</strong>
+          <strong>What you wanted to tell your future self:</strong>
           {{ workshop.future_self }}</span>
         {% endif %}
         {% if workshop.course_feedback != None and workshop.course_feedback != "" %}
         <span class="workshop__course-feedback"><br>
-          <strong>What you wanted to tell your future self:</strong>
+          <strong>Your comments, tips or compliments for the staff:</strong>
           {{ workshop.course_feedback }}</span>
         {% endif %}
       </li>

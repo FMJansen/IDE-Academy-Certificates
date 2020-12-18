@@ -16,9 +16,11 @@
   <body>
 
     <header class="site-header">
+      {% block header %}
       <h1 class="site-header__name">
-        {% block header %}IDE Academy Certificates{% endblock %}
+        IDE Academy Certificates
       </h1>
+      {% endblock %}
     </header>
 
     <main>
