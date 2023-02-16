@@ -27,4 +27,4 @@ signxml==2.8.1
 six==1.16.0
 SQLAlchemy==1.4.15
 virtualenv==20.4.6
-Werkzeug==2.0.0
+Werkzeug==2.2.3
